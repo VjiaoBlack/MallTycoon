@@ -17,7 +17,9 @@
   `clojure.edn/read-string`, which will transform our string into a data
   structure."
   (gloss/compile-frame
-   (gloss/finite-frame :uint32 (gloss/string :utf-8))
+   (gloss/finite-frame
+    (gloss/prefix :uint32)
+    (gloss/string :utf-8))
    pr-str
    edn/read-string))
 
