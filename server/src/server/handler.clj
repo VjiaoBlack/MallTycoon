@@ -40,7 +40,7 @@
   [protocol s]
   (let [out (s/stream)]
     (s/connect
-     (s/map #(io/encode protocol %) out)
+     (s/map (partial io/encode protocol) out)
      s)
     (s/splice
      out
@@ -48,6 +48,7 @@
 
 (defn event-handler
   [stream info]
+  
   (d/loop []
     (-> (s/take! stream ::none)
         (d/chain
@@ -55,7 +56,7 @@
            (if (= ::none msg)
              ::none
              ;; just an example of doing this on another thread
-             (d/future (identity "OKAY"))))
+             (d/future (str "OKAY: " msg))))
 
          ;; write to client once previous future is completed
          (fn [msg']
