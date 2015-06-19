@@ -27,10 +27,45 @@ void get_input() {
         if (event.type == SDL_KEYUP) {  // any key is released
             if (event.key.keysym.sym < 323)
                 keys_held[event.key.keysym.sym] = 0;
+
+            if (event.key.keysym.sym == SDLK_UP) {
+                view_mode.set_y_offvel(0);
+            }
+
+            if (event.key.keysym.sym == SDLK_DOWN) {
+                view_mode.set_y_offvel(0);
+            }
+
+            if (event.key.keysym.sym == SDLK_LEFT) {
+                view_mode.set_x_offvel(0);
+            }
+
+            if (event.key.keysym.sym == SDLK_RIGHT) {
+                view_mode.set_x_offvel(0);
+            }
+
+
         }
         if (event.type == SDL_KEYDOWN) {  // any key is pressed
             if (event.key.keysym.sym < 323)
                 keys_held[event.key.keysym.sym] = 1;
+
+            if (event.key.keysym.sym == SDLK_UP) {
+                view_mode.set_y_offvel(-5);
+            }
+
+            if (event.key.keysym.sym == SDLK_DOWN) {
+                view_mode.set_y_offvel(5);
+            }
+
+            if (event.key.keysym.sym == SDLK_LEFT) {
+                view_mode.set_x_offvel(-5);
+            }
+
+            if (event.key.keysym.sym == SDLK_RIGHT) {
+                view_mode.set_x_offvel(5);
+            }
+
         }
         if (event.type == SDL_MOUSEMOTION) {
             mouse_x = event.motion.x;

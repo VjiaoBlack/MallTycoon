@@ -16,18 +16,23 @@ void draw() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
+void update() {
+    view_mode.set_x_offset(view_mode.get_x_offset() + view_mode.get_x_offvel());
+    view_mode.set_y_offset(view_mode.get_y_offset() + view_mode.get_y_offvel());
+
+}
+
 int main(int argv, char* argc[]) {
 
     init_sdl();
     mspf = 1000 / FPS;
-    xo = 100;
-    yo = 100;
 
 
     struct timeval start, current;
 
     gettimeofday(&start, NULL);
     gettimeofday(&current, NULL);
+
 
     std::ifstream map_data;
     map_data.open("res/map.txt");
@@ -41,10 +46,9 @@ int main(int argv, char* argc[]) {
         gettimeofday(&current, NULL);
         get_input();
         draw();
+        update();
 
 
-        xo++;
-        yo++;
         SDL_Delay(mspf);
     }
 

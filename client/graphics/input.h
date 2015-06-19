@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDL.h"
+#include <iostream>
+#include "../graphics/graphics.h"
 
 extern int keys_held[323];
 extern int sdl_quit;

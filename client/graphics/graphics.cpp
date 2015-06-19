@@ -8,6 +8,30 @@ SDL_Renderer* renderer;
 
 std::map<std::string, SDL_Texture*> textures;
 
+
+int ViewMode::set_x_offset(int x) {
+    int old = x_offset;
+    x_offset = x;
+    return old;
+}
+int ViewMode::set_y_offset(int y) {
+    int old = y_offset;
+    y_offset = y;
+    return old;
+}
+
+float ViewMode::set_x_offvel(float x) {
+    float old = x_offvel;
+    x_offvel = x;
+    return old;
+}
+float ViewMode::set_y_offvel(float y) {
+    float old = y_offvel;
+    y_offvel = y;
+    return old;
+}
+
+
 void draw_line(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
     SDL_SetRenderDrawColor( renderer, r, g, b, a );
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);

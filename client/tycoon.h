@@ -11,7 +11,8 @@
 #define FPS 60
 
 
-int xo, yo;
+void update();
+
 float mspf;
 
 #endif

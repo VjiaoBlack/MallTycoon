@@ -23,11 +23,19 @@ void init_graphics();
 
 class ViewMode {
     int x_offset, y_offset;
+    float x_offvel, y_offvel;
 public:
-    ViewMode(){x_offset = y_offset = 0;}
-    ViewMode(int x, int y){x_offset = x; y_offset = y;}
+    ViewMode(){x_offset = y_offset = x_offvel = y_offvel = 0;}
+    ViewMode(int x, int y){x_offset = x; y_offset = y; y_offvel = x_offvel = 0;}
     int get_x_offset(){return x_offset;}
     int get_y_offset(){return y_offset;}
+    int set_x_offset(int x);
+    int set_y_offset(int y);
+
+    float get_x_offvel(){return x_offvel;}
+    float get_y_offvel(){return y_offvel;}
+    float set_x_offvel(float x);
+    float set_y_offvel(float y);
 };
 
 extern ViewMode view_mode;
