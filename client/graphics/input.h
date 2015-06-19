@@ -5,9 +5,10 @@
 #include <stdlib.h>
 #include "SDL.h"
 #include <iostream>
+#include <map>
 #include "../graphics/graphics.h"
 
-extern int keys_held[323];
+extern std::map<int,int> keys_held;
 extern int sdl_quit;
 
 

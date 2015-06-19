@@ -68,7 +68,7 @@ void delete_map(Map* m) {
 
 
 
-void draw_map(Map* m) {
+void Map::draw() {
     long long coords;
     int x, y;
 
@@ -87,8 +87,8 @@ void draw_map(Map* m) {
     srcrect.h = 32;
 
 
-    for (int i = 0; i < m->get_rows(); i++) {
-        for (int j = 0; j < m->get_cols(); j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
 
 
             coords = iso_to_screen(view_mode.get_x_offset(),view_mode.get_y_offset(), i, j);
@@ -101,10 +101,10 @@ void draw_map(Map* m) {
             dstrect.w = 64;
             dstrect.h = 64;
 
-            type_nw = m->get_node_type(i  ,j  );
-            type_ne = m->get_node_type(i  ,j+1);
-            type_sw = m->get_node_type(i+1,j  );
-            type_se = m->get_node_type(i+1,j+1);
+            type_nw = types->at(i * (cols + 1) +  j  );
+            type_ne = types->at(i * (cols + 1) +  j+1);
+            type_sw = types->at((i+1)*(cols+1) +  j  );
+            type_se = types->at((i+1)*(cols+1) +  j+1);
 
             if (type_nw == 2 && type_ne == 2 &&
                 type_sw == 2 && type_se == 2) {

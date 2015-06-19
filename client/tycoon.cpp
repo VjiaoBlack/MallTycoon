@@ -6,7 +6,7 @@ Map* a;
 void draw() {
     SDL_RenderClear(renderer);
 
-    draw_map(a);
+    a->draw();
 
 
 
@@ -17,9 +17,10 @@ void draw() {
 }
 
 void update() {
-    view_mode.set_x_offset(view_mode.get_x_offset() + view_mode.get_x_offvel());
-    view_mode.set_y_offset(view_mode.get_y_offset() + view_mode.get_y_offvel());
 
+
+
+    view_mode.update();
 }
 
 int main(int argv, char* argc[]) {

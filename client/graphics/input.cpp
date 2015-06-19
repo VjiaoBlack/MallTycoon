@@ -2,18 +2,17 @@
 
 #include "input.h"
 
-int keys_held[323];
+std::map<int,int> keys_held;
 int sdl_quit;
 int mouse_x, mouse_y;
 int mouse_xvel, mouse_yvel;
 
 
 void init_input() {
-    memset(keys_held,0,sizeof(keys_held));
+    keys_held.clear();
     sdl_quit = 0;
 }
 
-// gets input from the user
 
 // does not handle: caps, control, fnction, option/alt, commmand, shift/tab??
 void get_input() {
@@ -25,46 +24,12 @@ void get_input() {
             sdl_quit = 1;
         }
         if (event.type == SDL_KEYUP) {  // any key is released
-            if (event.key.keysym.sym < 323)
-                keys_held[event.key.keysym.sym] = 0;
-
-            if (event.key.keysym.sym == SDLK_UP) {
-                view_mode.set_y_offvel(0);
-            }
-
-            if (event.key.keysym.sym == SDLK_DOWN) {
-                view_mode.set_y_offvel(0);
-            }
-
-            if (event.key.keysym.sym == SDLK_LEFT) {
-                view_mode.set_x_offvel(0);
-            }
-
-            if (event.key.keysym.sym == SDLK_RIGHT) {
-                view_mode.set_x_offvel(0);
-            }
-
+            keys_held[event.key.keysym.sym] = 0;
 
         }
         if (event.type == SDL_KEYDOWN) {  // any key is pressed
-            if (event.key.keysym.sym < 323)
-                keys_held[event.key.keysym.sym] = 1;
+            keys_held[event.key.keysym.sym] = 1;
 
-            if (event.key.keysym.sym == SDLK_UP) {
-                view_mode.set_y_offvel(-5);
-            }
-
-            if (event.key.keysym.sym == SDLK_DOWN) {
-                view_mode.set_y_offvel(5);
-            }
-
-            if (event.key.keysym.sym == SDLK_LEFT) {
-                view_mode.set_x_offvel(-5);
-            }
-
-            if (event.key.keysym.sym == SDLK_RIGHT) {
-                view_mode.set_x_offvel(5);
-            }
 
         }
         if (event.type == SDL_MOUSEMOTION) {

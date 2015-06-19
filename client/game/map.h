@@ -32,13 +32,11 @@ public:
     int get_node_type(int r, int c);
     int set_node_type(int r, int c, int type);
     void delete_tiles();
+    void draw();
 };
 
 void delete_map(Map* m);
 // void populate_map(map*, char const*);
-
-void draw_map(Map*);
-
 
 long long iso_to_screen(int, int, int, int);
 
