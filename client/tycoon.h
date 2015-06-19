@@ -1,3 +1,6 @@
+#ifndef TYCOON_H
+#define TYCOON_H
+
 #include <stdio.h>
 #include <sys/time.h>
 #include "graphics/graphics.h"
@@ -6,5 +9,8 @@
 
 #define FPS 60
 
+
 int xo, yo;
 float mspf;
+
+#endif

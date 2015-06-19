@@ -1,84 +1,79 @@
 #include "map.h"
 
 
-tile* new_tile(int x, int y, int type) {
-    tile* t = (tile*) malloc(sizeof(tile));
-    t->x = x;
-    t->y = y;
-    t->type = type;
-
-    return t;
+int Tile::set_type(int t) {
+    int a = type;
+    type = t;
+    return a;
 }
 
-void free_tile(tile* t) {
-    free(t);
-}
+Map::Map(int r, int c, const char* str){
+    rows = r;
+    cols = c;
 
-map* new_map(int r, int c) {
-    map* m = malloc(sizeof(map));
-    m->rows = r;
-    m->cols = c;
+    int type;
 
-    m->tiles = malloc(sizeof(tile*) * r);
+    tiles = new std::vector<Tile*>();
 
-    for (int i = 0; i < r; ++i) {
-        m->tiles[i] = malloc(sizeof(tile) * c);
-        for (int j = 0; j < c; ++j) {
-            m->tiles[i][j] = new_tile(i, j, 0);
-        }
-    }
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
 
-    return m;
-}
-void free_map(map* m) {
-    for (int i = 0; i < m->rows; ++i) {
-        for (int j = 0; j < m->cols; ++j) {
-            free(m->tiles[i][j]);
-        }
-        free(m->tiles[i]);
-    }
-    free(m->tiles);
-    free(m);
-}
-
-
-void populate_map(map* m, char* string) { // maybe this should be const*
-
-    for (int r = 0; r < m->rows; r++) {
-        for (int c = 0; c < m->cols; c++) {
-            // treats 1D char array as 2D
-            switch ((string)[r * (m->rows)+ c]) {
+            switch (str[i * rows + j]) {
                 case '1':
-                    m->tiles[r][c]->type = 1;
+                    type = 1;
                     break;
                 case '2':
-                    m->tiles[r][c]->type = 2;
+                    type = 2;
                     break;
                 default:
-                    m->tiles[r][c]->type = 0;
+                    type = 0;
                     break;
             }
+
+            tiles->push_back(new Tile(i, j, type));
         }
     }
-
 }
 
-void draw_map(map* m) {
+int Map::get_tile_type(int r, int c) {
+    return tiles->at(r + c * cols)->get_type();
+}
+
+int Map::set_tile_type(int x, int y, int type) {
+    int old_tile_type = tiles->at(x + y * cols)->get_type();
+    tiles->at(x + y * cols)->set_type(type);
+    return old_tile_type;
+}
+
+void Map::delete_tiles() {
+    for (std::vector<Tile*>::iterator i = tiles->begin(); i != tiles->end(); ++i) {
+        delete *i;
+    }
+}
+
+void delete_map(Map* m) {
+    m->delete_tiles();
+
+    delete m;
+}
+
+
+
+void draw_map(Map* m) {
     long long coords;
     int x, y;
 
     int r, g, b, a;
 
-
-    for (int i = 0; i < m->rows; i++) {
-        for (int j = 0; j < m->cols; j++) {
+    for (int i = 0; i < m->get_rows(); i++) {
+        for (int j = 0; j < m->get_cols(); j++) {
 
             coords = iso_to_screen(300,300, i, j);
 
             x = ((int) (coords >> 32)) & -1;
             y = (int) (coords & ( (long long) ((int) -1)));
 
-            switch (m->tiles[i][j]->type) {
+            switch (m->get_tile_type(i,j)) {
                 case 1:
                     r = 0;
                     g = 0;
@@ -105,9 +100,10 @@ void draw_map(map* m) {
 
         }
     }
-
-
 }
+
+
+
 
 // holds 2 ints
 long long iso_to_screen(int x_off, int y_off, int r, int c) {

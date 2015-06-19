@@ -1,7 +1,10 @@
-#include "SDL2/SDL.h"
+#ifndef WRAPPER_H
+#define WRAPPER_H
 
 
-SDL_Surface* screen;
+#include "SDL.h"
+
+
 SDL_Surface* screen;
 
 Uint32 pixel(int r, int g, int b);
@@ -17,3 +20,6 @@ void open_window(int,int);
 void close_window();
 
 void quit(int);
+
+
+#endif

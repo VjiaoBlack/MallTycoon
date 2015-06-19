@@ -3,14 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
-int keys_held[323];
-int sdl_quit;
+extern int keys_held[323];
+extern int sdl_quit;
 
 
-int mouse_x, mouse_y;
-int mouse_xvel, mouse_yvel;
+extern int mouse_x, mouse_y;
+extern int mouse_xvel, mouse_yvel;
 
 void init_input();
 void get_input();

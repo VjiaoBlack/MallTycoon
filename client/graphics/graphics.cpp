@@ -1,12 +1,25 @@
 #include "graphics.h"
 
+ViewMode view_mode;
+
+SDL_Window* window;
+SDL_Texture* texture;
+SDL_Renderer* renderer;
+
+
+
 void draw_line(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
     SDL_SetRenderDrawColor( renderer, r, g, b, a );
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
+void init_graphics() {
+
+}
+
 
 void init_sdl() {
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("Could not initialize SDL: %s\n", SDL_GetError());
         exit(1);

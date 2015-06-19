@@ -2,6 +2,12 @@
 
 #include "input.h"
 
+int keys_held[323];
+int sdl_quit;
+int mouse_x, mouse_y;
+int mouse_xvel, mouse_yvel;
+
+
 void init_input() {
     memset(keys_held,0,sizeof(keys_held));
     sdl_quit = 0;
