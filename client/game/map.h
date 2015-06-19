@@ -29,7 +29,7 @@ class Map {
     std::vector<Tile*>* tiles;
     int rows, cols;
 public:
-    Map(int r, int c, const char* str);
+    Map(std::ifstream &data);
     int get_rows(){return rows;}
     int get_cols(){return cols;}
     int get_tile_type(int x, int y);

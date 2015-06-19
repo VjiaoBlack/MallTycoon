@@ -7,6 +7,7 @@
 #include "graphics/input.h"
 #include "game/map.h"
 
+
 #define FPS 60
 
 

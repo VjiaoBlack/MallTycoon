@@ -3,11 +3,21 @@
 
 
 #include "SDL.h"
+// #include "/Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include <SDL_image.h>
 #include <iostream>
+#include <fstream>
+#include <map>
+#include <string>
+#include <vector>
 
 void draw_line(int,int,int,int, int,int,int,int);
 
 void init_sdl();
+
+void load_textures();
+
+void clear_textures();
 
 void init_graphics();
 
@@ -25,6 +35,11 @@ extern ViewMode view_mode;
 extern SDL_Window* window;
 extern SDL_Texture* texture;
 extern SDL_Renderer* renderer;
+
+extern SDL_Texture *grass;
+
+extern std::map<std::string, SDL_Texture*> textures;
+
 
 
 // TODO: this graphics world view thing.

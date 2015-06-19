@@ -1,5 +1,4 @@
 #include "tycoon.h"
-#include <iostream>
 
 Map* a;
 
@@ -7,11 +6,13 @@ Map* a;
 void draw() {
     SDL_RenderClear(renderer);
 
-    draw_line(0, 0, mouse_x, mouse_y, 255, 255, 255, 1);
-
     draw_map(a);
 
+
+
     SDL_RenderPresent(renderer);
+
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
@@ -28,10 +29,12 @@ int main(int argv, char* argc[]) {
     gettimeofday(&start, NULL);
     gettimeofday(&current, NULL);
 
-    std::string str = "1111112221121211222111111";
-    const char *cstr = str.c_str();
+    std::ifstream map_data;
+    map_data.open("res/map.txt");
 
-    a = new Map(5,5, cstr);
+
+
+    a = new Map(map_data);
 
     while (!keys_held[ (int) 'q']) {
 
@@ -45,7 +48,7 @@ int main(int argv, char* argc[]) {
         SDL_Delay(mspf);
     }
 
-
+    clear_textures();
     delete_map(a);
 
     SDL_DestroyWindow(window);
