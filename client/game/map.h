@@ -1,30 +1,46 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef MAP_H
+#define MAP_H
+
+
+#include <iostream>
+#include <vector>
 #include "../graphics/graphics.h"
+#include <math.h>
 
+class Tile {
+    int x, y;
+public:
+    Tile(int a, int b){
+        x = a;
+        y = b;
+    }
+    void operator=(const Tile src) {
+        x = src.x;
+        y = src.y;
+    }
+    int get_x(){return x;}
+    int get_y(){return y;}
+};
 
-typedef struct {
-    int x;
-    int y;
-    int type;
+class Map {
+    std::vector<Tile*>* tiles;
+    std::vector<int>* types;
+    int rows, cols;
+public:
+    Map(std::ifstream &data);
+    int get_rows(){return rows;}
+    int get_cols(){return cols;}
+    int get_node_type(int r, int c);
+    int set_node_type(int r, int c, int type);
+    void delete_tiles();
+    void draw();
+    void update(ViewMode& view_mode);
+};
 
-} tile;
-
-typedef struct {
-    tile*** tiles;
-    int rows;
-    int cols;
-} map;
-
-
-tile* new_tile(int, int, int);
-void free_tile(tile*);
-
-map* new_map(int, int);
-void free_map(map*);
-void populate_map(map*, char*); // maybe this should be const*
-
-void draw_map(map*);
-
+void delete_map(Map* m);
+// void populate_map(map*, char const*);
 
 long long iso_to_screen(int, int, int, int);
+
+
+#endif
