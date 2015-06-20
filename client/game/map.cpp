@@ -60,6 +60,13 @@ void Map::delete_tiles() {
     }
 }
 
+void Map::update(ViewMode& vm) {
+    // if view_mode is constructing or something, we must decide how to modify map.
+
+    // i.e. draw roads, etc.
+    // We must decide what's stored in tiles and what's stored by themselves.
+}
+
 void delete_map(Map* m) {
     m->delete_tiles();
 
@@ -197,9 +204,12 @@ void Map::draw() {
                 std::cerr << type_se;
             }
 
-
             SDL_RenderCopy(renderer, textures.at(tile_type), &srcrect, &dstrect); //srcrect, destrect
 
+
+            if (std::abs(mouse_x - x) + 2 * std::abs(mouse_y - y) < 32) {
+                SDL_RenderCopy(renderer, textures.at("shadow"), NULL, &dstrect);
+            }
         }
     }
 

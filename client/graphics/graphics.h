@@ -1,6 +1,8 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 640
 
 #include "SDL.h"
 #include "input.h"
@@ -14,6 +16,7 @@
 #include <vector>
 
 void draw_line(int,int,int,int, int,int,int,int);
+void draw_rect(int,int,int,int, int,int,int,int);
 
 void init_sdl();
 
@@ -27,8 +30,14 @@ class ViewMode {
     int x_offset, y_offset;
     float x_offvel, y_offvel;
     float x_offacc, y_offacc;
+
+    int construction_mode; // lets the user know what's the current construction mode.
+
 public:
-    ViewMode(){x_offset = y_offset = x_offvel = y_offvel = x_offacc = y_offacc = 0;}
+    ViewMode(){
+        x_offset = y_offset = x_offvel = y_offvel = x_offacc = y_offacc = 0;
+        construction_mode = -1;
+    }
     ViewMode(int x, int y){x_offset = x; y_offset = y; y_offvel = x_offvel = x_offacc = y_offacc = 0;}
     int get_x_offset(){return x_offset;}
     int get_y_offset(){return y_offset;}
@@ -44,6 +53,9 @@ public:
     float get_y_offacc(){return y_offacc;}
     float set_x_offacc(float x);
     float set_y_offacc(float y);
+
+    int get_construction_mode() {return construction_mode;};
+    int set_construction_mode(int c);
 
     void update();
 };

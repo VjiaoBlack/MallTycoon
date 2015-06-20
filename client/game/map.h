@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "../graphics/graphics.h"
+#include <math.h>
 
 class Tile {
     int x, y;
@@ -33,6 +34,7 @@ public:
     int set_node_type(int r, int c, int type);
     void delete_tiles();
     void draw();
+    void update(ViewMode& view_mode);
 };
 
 void delete_map(Map* m);

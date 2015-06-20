@@ -17,8 +17,8 @@ SDL_FLAGS	= 	`sdl2-config --cflags --libs` -lSDL2_image
 
 all: tycoon
 
-tycoon: build/tycoon.o build/graphics.o build/wrapper.o build/input.o build/map.o
-	$(LINK) build/tycoon.o build/graphics.o build/wrapper.o build/input.o build/map.o $(SDL_FLAGS) -o tycoon
+tycoon: build/tycoon.o build/graphics.o build/wrapper.o build/input.o build/map.o build/menu.o
+	$(LINK) build/tycoon.o build/graphics.o build/wrapper.o build/input.o build/map.o build/menu.o $(SDL_FLAGS) -o tycoon
 
 build/tycoon.o: tycoon.cpp tycoon.h
 	$(COMPILE) tycoon.cpp $(SDL_FLAGS) -o build/tycoon.o
@@ -34,6 +34,9 @@ build/wrapper.o: graphics/wrapper.cpp graphics/wrapper.h
 
 build/input.o: graphics/input.cpp graphics/input.h
 	$(COMPILE) graphics/input.cpp $(SDL_FLAGS) -o build/input.o
+
+build/menu.o: game/menu.cpp game/menu.h
+	$(COMPILE) game/menu.cpp $(SDL_FLAGS) -o build/menu.o
 
 clean:
 	rm *.o tycoon

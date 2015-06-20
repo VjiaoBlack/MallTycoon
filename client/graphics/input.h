@@ -9,6 +9,10 @@
 #include "../graphics/graphics.h"
 
 extern std::map<int,int> keys_held;
+// NOTE TO SELF, INCLUDE AN OLD KEYS_HELD TO DETECT CLICK BOUNDARIES:
+
+
+
 extern int sdl_quit;
 
 

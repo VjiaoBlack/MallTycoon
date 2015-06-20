@@ -1,12 +1,20 @@
 #include "tycoon.h"
 
 Map* a;
+Menu* m;
 
 
 void draw() {
     SDL_RenderClear(renderer);
 
     a->draw();
+
+
+    // draw menu.
+    // should there be a menu object???
+
+    m->draw();
+
 
 
 
@@ -18,9 +26,12 @@ void draw() {
 
 void update() {
 
-
-
     view_mode.update();
+    m->update(view_mode);
+
+    // should we update the map?
+    // yes we should.
+    // a->update();
 }
 
 int main(int argv, char* argc[]) {
@@ -41,6 +52,7 @@ int main(int argv, char* argc[]) {
 
 
     a = new Map(map_data);
+    m = new Menu();
 
     while (!keys_held[ (int) 'q']) {
 

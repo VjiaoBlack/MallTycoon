@@ -38,46 +38,52 @@ float ViewMode::set_y_offacc(float y) {
     y_offacc = y;
     return old;
 }
+int ViewMode::set_construction_mode(int c) {
+    int old = construction_mode;
+    construction_mode = c;
+    return old;
+}
+
 void ViewMode::update() {
     y_offacc = 0;
     x_offacc = 0;
 
     float vel = 0.4;
 
-    if (keys_held[SDLK_UP]) {
+    if (keys_held[SDLK_DOWN]) {
         y_offacc = -vel;
     } else if (y_offvel < 0) {
         y_offacc = vel;
     }
 
-    if (keys_held[SDLK_DOWN]) {
+    if (keys_held[SDLK_UP]) {
         y_offacc = vel;
     } else if (y_offvel > 0) {
         y_offacc = -vel;
     }
 
 
-    if (!keys_held[SDLK_UP] && !keys_held[SDLK_DOWN]) {
+    if (!keys_held[SDLK_DOWN] && !keys_held[SDLK_UP]) {
         if (y_offvel < vel && y_offvel > -vel) {
             y_offvel = 0;
             y_offacc = 0;
         }
     }
 
-    if (keys_held[SDLK_LEFT]) {
+    if (keys_held[SDLK_RIGHT]) {
         x_offacc = -vel;
     } else if (x_offvel < 0) {
         x_offacc = vel;
     }
 
-    if (keys_held[SDLK_RIGHT]) {
+    if (keys_held[SDLK_LEFT]) {
         x_offacc = vel;
     } else if (x_offvel > 0) {
         x_offacc = -vel;
     }
 
 
-    if (!keys_held[SDLK_RIGHT] && !keys_held[SDLK_LEFT]) {
+    if (!keys_held[SDLK_LEFT] && !keys_held[SDLK_RIGHT]) {
         if (x_offvel < vel && x_offvel > -vel) {
             x_offvel = 0;
             x_offacc = 0;
@@ -120,6 +126,17 @@ void draw_line(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
+void draw_rect(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
+    SDL_SetRenderDrawColor( renderer, r, g, b, a );
+
+    int ymin = (y1 < y2) ? y1 : y2;
+    int ymax = (y1 > y2) ? y1 : y2;
+
+    for (int y = ymin; y <= ymax; ++y) {
+        SDL_RenderDrawLine(renderer, x1, y, x2, y);
+    }
+}
+
 
 
 void clear_textures() {
@@ -129,8 +146,8 @@ void clear_textures() {
 void load_textures() {
     SDL_Texture* text;
 
-    std::string files[] = {"grass","road","water"};
-    int num_files = 3;
+    std::string files[] = {"grass","road","water","shadow"};
+    int num_files = 4;
 
     for (int i = 0; i < num_files; i++) {
         /* Open the image files */
@@ -158,7 +175,7 @@ void init_sdl() {
     window = SDL_CreateWindow("My Game Window",
                         SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOWPOS_UNDEFINED,
-                        800, 640,
+                        WINDOW_WIDTH, WINDOW_HEIGHT,
                         SDL_WINDOW_SHOWN);
 
     if (window == NULL) {

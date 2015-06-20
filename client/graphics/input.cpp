@@ -25,12 +25,9 @@ void get_input() {
         }
         if (event.type == SDL_KEYUP) {  // any key is released
             keys_held[event.key.keysym.sym] = 0;
-
         }
         if (event.type == SDL_KEYDOWN) {  // any key is pressed
             keys_held[event.key.keysym.sym] = 1;
-
-
         }
         if (event.type == SDL_MOUSEMOTION) {
             mouse_x = event.motion.x;
