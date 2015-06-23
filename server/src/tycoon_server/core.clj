@@ -2,10 +2,9 @@
   (:require [aleph.tcp :as tcp]
             [manifold.stream :as s]
             [manifold.deferred :as d]
-            [manifold.bus :as bus]))
+            [manifold.bus :as bus]
+            [tycoon-server.levels :as levels]))
 
-(defn read-map [map-name]
-  (slurp (clojure.java.io/file (clojure.java.io/resource "maps") map-name)))
 
 (defn sputln! [stream x]
   (s/put! stream (str (clojure.string/trim-newline x) "\n")))
@@ -17,7 +16,7 @@
          (fn [msg]
            (if (= ::none msg)
              ::none
-             (d/future (read-map (clojure.string/trim (String. msg))))))
+             (d/future (levels/read (String. msg)))))
          (fn [the-map]
            (when-not (= ::none the-map)
              (sputln! stream the-map)))
@@ -27,13 +26,7 @@
         (d/catch
             (fn [e]
               (s/put! stream (str "ERROR: " e))
-              (s/close! stream)))))
-
-  (comment
-   (d/let-flow
-    [initial-message (s/take! stream)]
-    (let [map-name (String. initial-message)]
-      (s/put! stream (read-map map-name))))))
+              (s/close! stream))))))
 
 (defn -main [& args]
   (let [port (Integer/parseInt (or (first args) "8080"))]
