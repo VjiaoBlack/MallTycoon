@@ -1,0 +1,16 @@
+## Clojure
+
+/server/target
+/server/lib
+/server/classes
+/server/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/server/.lein-*
+/server/.nrepl-port
+
+## Emacs
+\#*
+.\#*
