@@ -1,5 +1,7 @@
-## Clojure
+## Jekyll
+_site
 
+## Clojure
 /server/target
 /server/lib
 /server/classes
