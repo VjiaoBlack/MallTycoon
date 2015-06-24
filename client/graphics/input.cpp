@@ -2,12 +2,17 @@
 
 #include "input.h"
 
+std::map<int,int> keys_held;
+int sdl_quit;
+int mouse_x, mouse_y;
+int mouse_xvel, mouse_yvel;
+
+
 void init_input() {
-    memset(keys_held,0,sizeof(keys_held));
+    keys_held.clear();
     sdl_quit = 0;
 }
 
-// gets input from the user
 
 // does not handle: caps, control, fnction, option/alt, commmand, shift/tab??
 void get_input() {
@@ -19,12 +24,10 @@ void get_input() {
             sdl_quit = 1;
         }
         if (event.type == SDL_KEYUP) {  // any key is released
-            if (event.key.keysym.sym < 323)
-                keys_held[event.key.keysym.sym] = 0;
+            keys_held[event.key.keysym.sym] = 0;
         }
         if (event.type == SDL_KEYDOWN) {  // any key is pressed
-            if (event.key.keysym.sym < 323)
-                keys_held[event.key.keysym.sym] = 1;
+            keys_held[event.key.keysym.sym] = 1;
         }
         if (event.type == SDL_MOUSEMOTION) {
             mouse_x = event.motion.x;

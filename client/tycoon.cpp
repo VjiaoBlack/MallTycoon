@@ -1,25 +1,44 @@
 #include "tycoon.h"
 
+Map* a;
+Menu* m;
 
-map* a;
 
 void draw() {
     SDL_RenderClear(renderer);
-    draw_line(100, 100, mouse_x, mouse_y, 255, 255, 255, 255);
-    draw_map(a);
+
+    a->draw();
+
+
+    // draw menu.
+    // should there be a menu object???
+
+    m->draw();
+
+
+
 
     SDL_RenderPresent(renderer);
+
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
 
+void update() {
 
+    view_mode.update();
+    m->update(view_mode);
 
+    // should we update the map?
+    // yes we should.
+    // a->update();
 }
 
 int main(int argv, char* argc[]) {
+
     init_sdl();
     mspf = 1000 / FPS;
-    xo = 100;
-    yo = 100;
+
 
     struct timeval start, current;
 
@@ -27,33 +46,27 @@ int main(int argv, char* argc[]) {
     gettimeofday(&current, NULL);
 
 
-
-    a = new_map(5,5);
-    populate_map(a, "1111112221121211222111111"); // maybe this should be const*
-
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            printf("%d", a->tiles[i][j]->type);
-        }
-        printf("\n");
-    }
+    std::ifstream map_data;
+    map_data.open("res/map.txt");
 
 
-    while (!keys_held['q']) {
+
+    a = new Map(map_data);
+    m = new Menu();
+
+    while (!keys_held[ (int) 'q']) {
 
         gettimeofday(&current, NULL);
         get_input();
         draw();
+        update();
 
 
-        xo++;
-        yo++;
         SDL_Delay(mspf);
     }
-    free_map(a);
 
-
-
+    clear_textures();
+    delete_map(a);
 
     SDL_DestroyWindow(window);
     SDL_Quit();
